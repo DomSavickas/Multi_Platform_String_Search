@@ -1,3 +1,4 @@
+//Needs to be deleted later
 namespace Multi_Platform_String_Search.Data
 {
     public class WeatherForecastService
