@@ -1,0 +1,32 @@
+﻿@page "/resources"
+
+<h1>Resources</h1>
+
+<p>Current CPU usage: @CPUusage %</p>
+<p>Current CPU model: @CPUtype</p>
+
+@code {
+    private string currentDevice;
+    private string CPUusage;
+    private string CPUtype;
+
+    [Inject]
+    private CpuInfoService CpuInfoService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        CPUtype = CpuInfoService.CPUinfo();
+        CPUusage = CpuInfoService.CPUusage();
+        PrintIdiom();
+    }
+
+    private void PrintIdiom()
+    {
+        if (DeviceInfo.Current.Idiom == DeviceIdiom.Desktop)
+            currentDevice = "The current device is a desktop";
+        else if (DeviceInfo.Current.Idiom == DeviceIdiom.Phone)
+            currentDevice = "The current device is a phone";
+        else if (DeviceInfo.Current.Idiom == DeviceIdiom.Tablet)
+            currentDevice = "The current device is a Tablet";
+    }
+}

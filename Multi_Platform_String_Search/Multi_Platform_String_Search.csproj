@@ -50,7 +50,22 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Compile Remove="ICpuInforProvider.cs" />
+      <Compile Remove="Pages\Index1.cshtml.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="Pages\Component1.razor" />
+      <Content Remove="Pages\Counter - Copy.razor" />
+      <Content Remove="Pages\Index1.cshtml" />
+      <Content Remove="Pages\Index2.cshtml" />
+      <Content Remove="Pages\_ViewImports1.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Hardware.Info" Version="100.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+        <PackageReference Include="SysInfo" Version="1.0.0" />
     </ItemGroup>
 
 </Project>

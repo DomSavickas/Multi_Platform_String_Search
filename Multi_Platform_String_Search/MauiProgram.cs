@@ -23,6 +23,7 @@ namespace Multi_Platform_String_Search
 #endif
 
             builder.Services.AddSingleton<WeatherForecastService>();
+            builder.Services.AddSingleton<CpuInfoService>();
 
             return builder.Build();
         }
