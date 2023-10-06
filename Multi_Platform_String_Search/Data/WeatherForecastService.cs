@@ -1,4 +1,4 @@
-namespace Multi_Platform_String_Search.Data
+﻿namespace Multi_Platform_String_Search.Data
 {
     public class WeatherForecastService
     {

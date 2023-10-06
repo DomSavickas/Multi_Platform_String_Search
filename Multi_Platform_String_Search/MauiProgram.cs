@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Multi_Platform_String_Search.Data;
+using Syncfusion.Blazor;
 
 namespace Multi_Platform_String_Search
 {
@@ -16,6 +17,7 @@ namespace Multi_Platform_String_Search
                 });
 
             builder.Services.AddMauiBlazorWebView();
+builder.Services.AddSyncfusionBlazor();
 
 #if DEBUG
 		builder.Services.AddBlazorWebViewDeveloperTools();

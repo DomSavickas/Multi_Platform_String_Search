@@ -1,0 +1,97 @@
+﻿@page "/semi-circular-gauge"
+@using Microsoft.AspNetCore.Components
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.CircularGauge
+@using Syncfusion.Blazor.Buttons
+@using ThemeHelper
+@inject NavigationManager NavigationManager
+<style>
+    tr {
+        height: 40px;
+    }
+</style>
+
+<div class="col-lg-8 control-section sb-property-border" style="height:250px; width:250px">
+    <SfCircularGauge Height=@Height Width=@Width CenterX="@GaugeCenterX" CenterY="@GaugeCenterY" MoveToCenter="@GaugeMoveToCenter" Theme="@Theme" Background="transparent">
+        <CircularGaugeAxes>
+            <CircularGaugeAxis HideIntersectingLabel="@HideLabelCheck" StartAngle="@GaugeStartAngle" EndAngle="@GaugeEndAngle" Minimum="0" Maximum="100" Radius="@GaugeRadius">
+                <CircularGaugeAxisLineStyle Width="3" />
+                <CircularGaugeAxisLabelStyle Position="Syncfusion.Blazor.CircularGauge.Position.Outside" AutoAngle=true Format="{value}%">
+                    <CircularGaugeAxisLabelFont FontWeight="Normal" FontFamily="inherit" />
+                </CircularGaugeAxisLabelStyle>
+                <CircularGaugeAxisMajorTicks Position="Syncfusion.Blazor.CircularGauge.Position.Inside" Width="2" Height="15" Interval="10" />
+                <CircularGaugeAxisMinorTicks Position="Syncfusion.Blazor.CircularGauge.Position.Inside" Height="8" Width="1" Interval="2" />
+                <CircularGaugePointers>
+                    <CircularGaugeAnnotations>
+                        <CircularGaugeAnnotation Angle="180" Radius="45%" ZIndex="1">
+                            <ContentTemplate>
+                                <div class="custom-annotation-pointer-value">@PointerValue%</div>
+                            </ContentTemplate>
+                        </CircularGaugeAnnotation>
+                        <CircularGaugeAnnotation Angle="340" Radius="160%" ZIndex="1">
+                            <ContentTemplate>
+                                <div class="custom-annotation-label">@Label</div>
+                            </ContentTemplate>
+                        </CircularGaugeAnnotation>
+                    </CircularGaugeAnnotations>
+                    <CircularGaugePointer Value="@PointerValue" Radius="75%" PointerWidth="7">
+                        <CircularGaugePointerAnimation Enable=false />
+                        <CircularGaugeCap Radius="8">
+                            <CircularGaugeCapBorder Width="0" />
+                        </CircularGaugeCap>
+                        <CircularGaugeNeedleTail Length="0%" />
+                    </CircularGaugePointer>
+                </CircularGaugePointers>
+            </CircularGaugeAxis>
+        </CircularGaugeAxes>
+    </SfCircularGauge>
+    </div>
+<style type="text/css">
+    .custom-annotation-pointer-value {
+        color: white;
+        background-color: blue;
+        width: 40px;
+        line-height: 40px;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 15px;
+        border: 1px solid white;
+    }
+
+    .custom-annotation-label {
+        color: black;
+        width: 100%;
+        text-align: center;
+        font-size: 15px;
+        padding: 1px;
+    }
+</style>
+
+@code{
+    public Theme Theme { get; set; }
+    public string Height = "100%";
+    public string Width = "100%";
+    [Parameter]
+    public string Label { get; set; }
+    [Parameter]
+    public double GaugeStartAngle { get; set; }
+    [Parameter]
+    public double GaugeEndAngle { get; set; }
+    [Parameter]
+    public double PointerValue { get; set; }
+    [Parameter]
+    public string GaugeRadius { get; set; }
+    [Parameter]
+    public string GaugeCenterX { get; set; }
+    [Parameter]
+    public string GaugeCenterY { get; set; }
+    [Parameter]
+    public bool GaugeMoveToCenter { get; set; }
+    [Parameter]
+    public bool HideLabelCheck { get; set; }
+    
+    protected override void OnInitialized()
+    {
+        Theme = ThemeHelper.GetCurrentTheme(NavigationManager.Uri);
+    }
+}

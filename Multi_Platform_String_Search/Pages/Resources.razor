@@ -1,14 +1,16 @@
 ﻿@page "/resources"
+@using Syncfusion.Blazor.CircularGauge
 
 <h1>Resources</h1>
-
-<p>Current CPU usage: @CPUusage %</p>
-<p>Current CPU model: @CPUtype</p>
+<p style="height:35px"></p>
+<SemiCircularGauge Label=@CPUtype GaugeStartAngle=270 GaugeEndAngle=90 PointerValue="@CPUusage" GaugeRadius="100%" GaugeCenterX="50%" GaugeCenterY="50%" GaugeMoveToCenter=false HideLabelCheck=true />
 
 @code {
     private string currentDevice;
-    private string CPUusage;
+    private double CPUusage;
     private string CPUtype;
+    private string gHeight = "250px";
+    private string gWidth = "250px";
 
     [Inject]
     private CpuInfoService CpuInfoService { get; set; }
@@ -16,7 +18,7 @@
     protected override void OnInitialized()
     {
         CPUtype = CpuInfoService.CPUinfo();
-        CPUusage = CpuInfoService.CPUusage();
+        CPUusage = Convert.ToDouble(CpuInfoService.CPUusage());
         PrintIdiom();
     }
 
