@@ -5,13 +5,8 @@
 @using Syncfusion.Blazor.Buttons
 @using ThemeHelper
 @inject NavigationManager NavigationManager
-<style>
-    tr {
-        height: 40px;
-    }
-</style>
 
-<div class="col-lg-8 control-section sb-property-border" style="height:250px; width:250px">
+<div class="col-lg-8 control-section sb-property-border" style="height:250px; width:250px;">
     <SfCircularGauge Height=@Height Width=@Width CenterX="@GaugeCenterX" CenterY="@GaugeCenterY" MoveToCenter="@GaugeMoveToCenter" Theme="@Theme" Background="transparent">
         <CircularGaugeAxes>
             <CircularGaugeAxis HideIntersectingLabel="@HideLabelCheck" StartAngle="@GaugeStartAngle" EndAngle="@GaugeEndAngle" Minimum="0" Maximum="100" Radius="@GaugeRadius">
@@ -28,7 +23,7 @@
                                 <div class="custom-annotation-pointer-value">@PointerValue%</div>
                             </ContentTemplate>
                         </CircularGaugeAnnotation>
-                        <CircularGaugeAnnotation Angle="340" Radius="160%" ZIndex="1">
+                        <CircularGaugeAnnotation Angle=@TextAngle Radius=@TextRadius ZIndex="1">
                             <ContentTemplate>
                                 <div class="custom-annotation-label">@Label</div>
                             </ContentTemplate>
@@ -60,7 +55,7 @@
 
     .custom-annotation-label {
         color: black;
-        width: 100%;
+		width: 80%;
         text-align: center;
         font-size: 15px;
         padding: 1px;
@@ -89,6 +84,10 @@
     public bool GaugeMoveToCenter { get; set; }
     [Parameter]
     public bool HideLabelCheck { get; set; }
+    [Parameter]
+    public int TextAngle { get; set; }
+    [Parameter]
+    public string TextRadius { get; set; }
     
     protected override void OnInitialized()
     {
