@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
         <TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
@@ -62,7 +62,8 @@
       <Content Remove="Pages\_ViewImports1.cshtml" />
     </ItemGroup>
 
-    <ItemGroup>    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="23.1.39" />    <PackageReference Include="Syncfusion.Blazor.CircularGauge" Version="23.1.39" />
+    <ItemGroup>    <PackageReference Include="Syncfusion.Blazor.LinearGauge" Version="23.1.39" />
+    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="23.1.39" />    <PackageReference Include="Syncfusion.Blazor.CircularGauge" Version="23.1.39" />
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="23.1.39" />
     <PackageReference Include="Hardware.Info" Version="100.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />

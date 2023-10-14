@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using Multi_Platform_String_Search.Data;
 using Syncfusion.Blazor;
 

@@ -7,8 +7,9 @@
 <div class="flex-parent-element">
     <div class="flex-child-element"><SemiCircularGauge Label=@CPUtype GaugeStartAngle=270 GaugeEndAngle=90 PointerValue="@CPUusage" GaugeRadius="100%" GaugeCenterX="50%" GaugeCenterY="50%" GaugeMoveToCenter=false HideLabelCheck=true TextAngle="353" TextRadius="138%" /></div>
     <div class="flex-child-element"><SemiCircularGauge Label=@RAMtype GaugeStartAngle=270 GaugeEndAngle=90 PointerValue="@RAMusage" GaugeRadius="100%" GaugeCenterX="50%" GaugeCenterY="50%" GaugeMoveToCenter=false HideLabelCheck=true TextAngle="360" TextRadius="150%" /></div>
+    <div class="flex-child-element" style="margin-top: -23px;"><BarChart InvertedTrianglePointerValue = "@RAMusage" Label = "@DISKtype"></BarChart></div>
+    <div class="flex-child-element" style="margin-top: -23px;"><BarChart InvertedTrianglePointerValue = "@RAMusage" Label = "@DISKtype"></BarChart></div>
 </div>
-
 <p>@FullInfo</p>
 
 <style type="text/css">
@@ -31,6 +32,7 @@
     private double CPUusage;
     private string CPUtype;
     private string RAMtype;
+    private string DISKtype = "Disk1";
     private double RAMusage;
     private string gHeight = "250px";
     private string gWidth = "250px";

@@ -1,0 +1,83 @@
+﻿@page "/barchart"
+@using Microsoft.AspNetCore.Components
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.LinearGauge
+@using Syncfusion.Blazor.Buttons
+@using ThemeHelper
+@inject NavigationManager NavigationManager
+
+<style>
+    .divclass {
+        padding: 4px;
+        color: white;
+        border: solid #0074E3;
+        cursor: pointer;
+    }
+
+    .custom-annotation-pointer-value-lgauge {
+        margin-top: -8px;
+        margin-bottom: 8px;
+        font-size: 12px;
+        color: white;
+        margin-left: -16px;
+        width: 30px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 19px;
+    }
+</style>
+
+<div class="control-section">
+    <pre style="background-color: inherit; border:hidden"></pre>
+    <div class="row">
+        <div class="@ClassStyle" align="center">
+            <SfLinearGauge Title="@Label" Orientation="@GaugeOrientation" Theme="@Theme" Height="@Height" Width="@Width" Background="transparent">
+                <LinearGaugeMargin Left="0" Right="0" Top="5" Bottom="21"></LinearGaugeMargin>
+                <LinearGaugeTitleStyle FontWeight="499" FontFamily="inherit" />
+                <LinearGaugeAxes>
+                    <LinearGaugeAxis Minimum="0" Maximum="100" OpposedPosition="true">
+                        <LinearGaugeLine Width="5" />
+                        <LinearGaugeMajorTicks Interval="20" Height="7" Width="1" />
+                        <LinearGaugeMinorTicks Interval="10" Height="3" />
+                        <LinearGaugeAxisLabelStyle>
+                            <LinearGaugeAxisLabelFont FontFamily="inherit" FontWeight="499" />
+                        </LinearGaugeAxisLabelStyle>
+                        <LinearGaugePointers>
+                            <LinearGaugePointer PointerValue="@InvertedTrianglePointerValue" Placement="Placement.Center" Position="Syncfusion.Blazor.LinearGauge.Position.Cross" MarkerType="MarkerType.Circle" Width="30" Color="blue" Offset="@TextPointerOffset" />
+                            <LinearGaugePointer PointerValue="@InvertedTrianglePointerValue" Placement="Placement.Center" Position="Syncfusion.Blazor.LinearGauge.Position.Cross" Type="Point.Bar" Width="5" Color="blue" />
+                        </LinearGaugePointers>
+                        <LinearGaugeAnnotations>
+                            <LinearGaugeAnnotation AxisIndex="0" AxisValue="@InvertedTrianglePointerValue" X="0" Y="0" ZIndex="1">
+                                <ContentTemplate>
+                                    <div class="custom-annotation-pointer-value-lgauge">@InvertedTrianglePointerValue.ToString()</div>
+                                </ContentTemplate>
+                            </LinearGaugeAnnotation>
+                        </LinearGaugeAnnotations>
+                    </LinearGaugeAxis>
+                </LinearGaugeAxes>
+            </SfLinearGauge>
+        </div>
+    </div>
+</div>
+
+@code {
+    public Theme Theme { get; set; }
+    public string TextPointerOffset = "-2";
+    public string VerticalBackgroundColor = "#0074E3";
+    public string HorizontalBackgroundColor = "white";
+    public string VerticalTextColor = "white";
+    public string HorizontalTextColor = "black";
+    public string Width = "70px";
+    public string Height = "200px";
+    public string ClassStyle = "col-xs-5 col-sm-5 col-lg-4 col-md-4";
+    private Orientation GaugeOrientation = Orientation.Vertical;
+    [Parameter]
+    public double InvertedTrianglePointerValue { get; set; }
+    [Parameter]
+    public string Label { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Theme = ThemeHelper.GetCurrentTheme(NavigationManager.Uri);
+    }
+}
