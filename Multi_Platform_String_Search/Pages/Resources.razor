@@ -1,5 +1,6 @@
 ﻿@page "/resources"
 @using Syncfusion.Blazor.CircularGauge
+@using System.Net;
 
 <h1>Resources</h1>
 <p style="height:25px"></p>
@@ -7,10 +8,13 @@
 <div class="flex-parent-element">
     <div class="flex-child-element"><SemiCircularGauge Label=@CPUtype GaugeStartAngle=270 GaugeEndAngle=90 PointerValue="@CPUusage" GaugeRadius="100%" GaugeCenterX="50%" GaugeCenterY="50%" GaugeMoveToCenter=false HideLabelCheck=true TextAngle="353" TextRadius="138%" /></div>
     <div class="flex-child-element"><SemiCircularGauge Label=@RAMtype GaugeStartAngle=270 GaugeEndAngle=90 PointerValue="@RAMusage" GaugeRadius="100%" GaugeCenterX="50%" GaugeCenterY="50%" GaugeMoveToCenter=false HideLabelCheck=true TextAngle="360" TextRadius="150%" /></div>
-    <div class="flex-child-element" style="margin-top: -23px;"><BarChart InvertedTrianglePointerValue = "@RAMusage" Label = "@DISKtype"></BarChart></div>
-    <div class="flex-child-element" style="margin-top: -23px;"><BarChart InvertedTrianglePointerValue = "@RAMusage" Label = "@DISKtype"></BarChart></div>
+    @foreach (var item in items)
+    {
+        string N = item.Dname;
+        double S = item.Dsize;
+        <div class="flex-child-element" style="margin-top:-23px"><BarChart Label ="@N" InvertedTrianglePointerValue="@S"></BarChart></div>
+    }
 </div>
-<p>@FullInfo</p>
 
 <style type="text/css">
      .flex-parent-element {
@@ -36,19 +40,45 @@
     private double RAMusage;
     private string gHeight = "250px";
     private string gWidth = "250px";
-    private string FullInfo = "";
+    private string TempString = "";
+    private string DISKname = "";
+    private double DISKsize;
+    private string DISKfSpace = "";
+    private string DISKspace = "";
+
+    public class Div
+    {
+        public string Dname { get; set; }
+        public double Dsize { get; set; }
+    }
+
+    private List<Div> items = new List<Div>();
 
     [Inject]
     private CpuInfoService CpuInfoService { get; set; }
 
     protected override void OnInitialized()
     {
+        items.Clear();
         CPUtype = CpuInfoService.CPUinfo();
         CPUusage = Convert.ToDouble(CpuInfoService.CPUusage());
         RAMtype = string.Join('/' , CpuInfoService.RAMtype());
         RAMusage = Convert.ToDouble(CpuInfoService.RAMusage());
-        FullInfo = string.Join('/', CpuInfoService.DISKtype());
+        foreach (var Disk in CpuInfoService.DISKtype())
+        {
+            DISKname = "Test";
+            DISKsize = Convert.ToDouble(Disk.Size);
+            DISKfSpace = Disk.FreeSpace;
+            DISKspace = Math.Round((Convert.ToDouble(DISKfSpace) / Convert.ToDouble(DISKsize) * 100), 0).ToString();
+            items.Add(new Div { Dname = DISKname.ToString(), Dsize = Convert.ToDouble(DISKspace) });
+            StateHasChanged();
+        }
         PrintIdiom();
+    }
+
+    public class DivData
+    {
+        public string InnerHtml { get; set; }
     }
 
     private void PrintIdiom()

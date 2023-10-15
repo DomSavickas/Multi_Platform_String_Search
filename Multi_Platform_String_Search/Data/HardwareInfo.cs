@@ -41,37 +41,47 @@ public class CpuInfoService
         return RAMtype;
     }
 
-    public List<string> DISKtype() //Returns DISK usage in percentage
+    public class DISKinfo
     {
-        double SinglePartitionFreeSpace = 0;
+        public string Disk { get; set; }
+        public string Size { get; set; }
+        public string FreeSpace { get; set; }
+    }
+    public List<DISKinfo> DISKtype() //Returns Disk names and the free space available
+    {
+        double SingleVolumeFreeSpace = 0;
         double TotalPartitionFreeSpace = 0;
-        var FullInfo = new List<string>();
+        List<DISKinfo> Disk = new List<DISKinfo>();
 
-        var hardwareInfo = new HardwareInfo();
-        hardwareInfo.RefreshDriveList();
-        foreach (var drive in hardwareInfo.DriveList)
+        var HardwareInfo = new HardwareInfo();
+        HardwareInfo.RefreshDriveList();
+        foreach (var drive in HardwareInfo.DriveList)
         {
-            string TempDname = drive.Model.ToString();
             double DISKsize = Convert.ToDouble(drive.Size);
-            FullInfo.Add(TempDname);
-            FullInfo.Add(Math.Round(DISKsize / Math.Pow(10, 9), 2).ToString());
+            Disk.Add(new DISKinfo {Disk = drive.Model.ToString(), Size = Math.Round(DISKsize / Math.Pow(10, 9), 2).ToString()});
             foreach (var partition in drive.PartitionList)
             {
-                string TempPname = partition.Name.ToString();
                 foreach (var volume in partition.VolumeList)
                 {
-                    SinglePartitionFreeSpace += Convert.ToDouble(volume.FreeSpace);
-                    TotalPartitionFreeSpace += SinglePartitionFreeSpace;
+                    SingleVolumeFreeSpace += Convert.ToDouble(volume.FreeSpace);
+                    TotalPartitionFreeSpace += SingleVolumeFreeSpace;
                 }
-                FullInfo.Add(TempPname);
-                FullInfo.Add(Math.Round(TotalPartitionFreeSpace / Math.Pow(10, 9), 1).ToString());
-                SinglePartitionFreeSpace = 0;
+                //FullInfo.Add(partition.Name.ToString()); //For later use in other UI elements
+                //FullInfo.Add(Math.Round(TotalPartitionFreeSpace / Math.Pow(10, 9), 1).ToString()); //For later use in other UI elements
+                SingleVolumeFreeSpace = 0;
             }
-            FullInfo.Add(Math.Round(TotalPartitionFreeSpace / Math.Pow(10, 9), 1).ToString());
+            if (Disk.Count > 0)
+            {
+                Disk[Disk.Count - 1].FreeSpace = Math.Round(TotalPartitionFreeSpace / Math.Pow(10, 9), 1).ToString();
+            }
+            else
+            {
+                Console.WriteLine("List is empty");
+            }
+            //Disk.Add(new DISKinfo { FreeSpace = Math.Round(TotalPartitionFreeSpace / Math.Pow(10, 9), 1).ToString() }); //Adds the total free space of the Disk to the list
             TotalPartitionFreeSpace = 0;
         }
-
-        return FullInfo;
+        return Disk;
     }
 
     public string GPUusage() //Returns GPU usage in percentage
